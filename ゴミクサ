@@ -1,0 +1,39 @@
+#!/bin/bash
+
+cd `dirname $0`
+
+# 曜日の取得
+# 月:1 火:2 水:3 木:4 金:5 土:6　日:7
+day_of_the_week=`date +%w`
+
+flag=`cat daily.flag`
+
+if [ $flag = `date +%Y%m%d` ]; then
+	exit
+fi
+
+if [ `date +%H%M` -gt 900 ]; then	# 9:00以上なら実行しない
+	exit
+fi
+if [ `date +%H%M` -lt 600 ]; then	# 6:00より前なら実行しない
+	exit
+fi
+
+if [ $day_of_the_week -eq 1 ]; then 	#月
+	echo "今日出せるゴミはありません。">/dev/null
+elif [ $day_of_the_week -eq 2 ]; then	#火
+	echo "今日出せるゴミは、燃えるごみ、びん、かん、新聞紙、段ボール" >/opt/nodered/alexa_speak.txt
+elif [ $day_of_the_week -eq 3 ]; then	#水
+	echo "今日出せるゴミは、生ゴミです。" >/opt/nodered/alexa_speak.txt
+elif [ $day_of_the_week -eq 4 ]; then	#木
+	echo "今日出せるゴミはありません。" >/opt/nodered/alexa_speak.txt
+elif [ $day_of_the_week -eq 5 ]; then	#金
+	echo "今日出せるゴミは、ペットボトル、プラスチックです。">/dev/null
+elif [ $day_of_the_week -eq 6 ]; then	#土
+	echo "今日出せるゴミは、生ゴミ、乾電池です。" >/opt/nodered/alexa_speak.txt
+elif [ $day_of_the_week -eq 7 ]; then	#日
+	echo "今日出せるゴミはありません。">/dev/null
+
+fi
+
+date +%Y%m%d >daily.flag
