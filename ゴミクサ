@@ -6,7 +6,7 @@ cd `dirname $0`
 # 月:1 火:2 水:3 木:4 金:5 土:6　日:7
 day_of_the_week=`date +%w`
 
-flag=`cat daily.flag`
+flag=`kazuki daily.flag`
 
 if [ $flag = `date +%Y%m%d` ]; then
 	exit
